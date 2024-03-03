@@ -28,7 +28,6 @@ class MainWindow(QMainWindow):
             location = winreg.HKEY_LOCAL_MACHINE
             path = winreg.OpenKeyEx(location, r"SOFTWARE\\Wow6432Node\\Valve\\Steam")
             self.steam = winreg.QueryValueEx(path, "InstallPath")[0]
-            self.steam = self.steam.replace("\\","/")
             if path:
                 winreg.CloseKey(path)
         except Exception as e:
@@ -262,7 +261,7 @@ class MainWindow(QMainWindow):
 
     def load_settings_clicked(self):
         try:
-            with open(f"{self.steam}/config/steamvr.vrsettings", "r") as file:
+            with open(f"{self.steam}\\config\\steamvr.vrsettings", "r") as file:
                 current = json.load(file)["driver_VirtualDesktop"]                  
                 
                 for variable in default_enabled:
@@ -359,18 +358,18 @@ class MainWindow(QMainWindow):
         #     json.dump(export_dict, indent=2, fp=outfile)
                 
         try:   
-            with open(f"{self.steam}/config/steamvr.vrsettings", "r+") as settings:
+            with open(f"{self.steam}\\config\\steamvr.vrsettings", "r+") as settings:
                 
                 temp = json.load(settings)
                 try:
-                    with open(f"{self.steam}/config/steamvr.vrsettings.originalbackup", "x") as backup:
+                    with open(f"{self.steam}\\config\\steamvr.vrsettings.originalbackup", "x") as backup:
                         json.dump(temp, fp=backup)
                         backup.close()
                 except:
                     ()
                 
                 try:
-                    with open(f"{self.steam}/config/steamvr.vrsettings.lastbackup", "w") as backup:
+                    with open(f"{self.steam}\\config\\steamvr.vrsettings.lastbackup", "w") as backup:
                         json.dump(temp, fp=backup)
                         backup.close()
                 except:
@@ -385,7 +384,7 @@ class MainWindow(QMainWindow):
                 
                 dlg = QMessageBox(self)
                 dlg.setWindowTitle("Virtual Desktop Body Tracking Configurator")            
-                dlg.setText(f"Successfully exported to SteamVR!\nApplied recommended tracker offsets\nBackup of original is saved at: {self.steam}/config/steamvr.vrsettings.originalbackup\nAnd backup of previous settings is saved at: {self.steam}/config/steamvr.vrsettings.lastbackup")
+                dlg.setText(f"Successfully exported to SteamVR!\nApplied recommended tracker offsets\nBackup of original is saved at: {self.steam}\\config\\steamvr.vrsettings.originalbackup\nAnd backup of previous settings is saved at: {self.steam}\\config\\steamvr.vrsettings.lastbackup")
                 
                 dlg.exec()
                 
