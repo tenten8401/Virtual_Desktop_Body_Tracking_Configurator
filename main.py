@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         self.steam = ""
         try:
             location = winreg.HKEY_LOCAL_MACHINE
-            path = winreg.OpenKeyEx(location, r"SOFTWARE\Wow6432Node\Valve\Steam")
+            path = winreg.OpenKeyEx(location, r"SOFTWARE\\Wow6432Node\\Valve\\Steam")
             self.steam = winreg.QueryValueEx(path, "InstallPath")[0]
             self.steam = self.steam.replace("\\","/")
             if path:
